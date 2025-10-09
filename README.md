@@ -1,5 +1,11 @@
 # Next.js Laravel Bridge
 
+[![npm version](https://badge.fury.io/js/next-laravel-bridge.svg)](https://badge.fury.io/js/next-laravel-bridge)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![Tests](https://img.shields.io/badge/Tests-32%2F32%20Passed-brightgreen.svg)](https://github.com/coddano/next-laravel-bridge)
+[![Build Status](https://github.com/coddano/next-laravel-bridge/workflows/CI/badge.svg)](https://github.com/coddano/next-laravel-bridge/actions)
+
 Un package NPM complet qui facilite l'intégration entre Next.js et Laravel, offrant des solutions prêtes à l'emploi pour l'authentification, la gestion des formulaires et la configuration API.
 
 ## Fonctionnalités
