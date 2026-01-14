@@ -232,24 +232,16 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Tests
-tests/
-**/*.test.ts
-**/*.test.tsx
-**/*.spec.ts
-**/*.spec.tsx
+# Tests - keep test files but ignore test artifacts
+# tests/  # Uncomment to ignore test directory
 
 # Documentation source
 docs/
 
-# Development files
-jest.config.js
-rollup.config.js
-tsconfig.json
+# Development files - keep config files in repo
 
 # GitHub Actions cache
 .git/
 
-# Linting
-.eslintrc*
+# Linting - keep config in repo
 prettier.config.js
