@@ -165,7 +165,7 @@ export function withAuth<P extends object>(
                         Accès non autorisé
                     </h1>
                     <p style={{ color: '#6b7280' }}>
-                        Vous n'avez pas les permissions nécessaires pour accéder à cette page.
+                        Vous n&apos;avez pas les permissions nécessaires pour accéder à cette page.
                     </p>
                     <button
                         onClick={() => window.history.back()}
