@@ -53,8 +53,8 @@ export const errorInterceptor = async (error: AxiosError) => {
 
           // Réessayer la requête originale avec le nouveau token
           if (originalRequest && originalRequest.url) {
-            originalRequest.headers = originalRequest.headers || {};
-            originalRequest.headers.Authorization = `Bearer ${data.token}`;
+            originalRequest.headers = originalRequest.headers ?? {} as typeof originalRequest.headers;
+            (originalRequest.headers as Record<string, string>).Authorization = `Bearer ${data.token}`;
 
             // Utiliser axios au lieu de fetch pour maintenir la cohérence
             return axios(originalRequest);
