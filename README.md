@@ -372,7 +372,7 @@ npm run test:coverage # With coverage
 
 ## 📚 Documentation
 
-See [ROADMAP.md](./ROADMAP.md) for planned features.
+See [README.md](./README.md)
 
 ## 📄 License
 
