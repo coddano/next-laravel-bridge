@@ -14,6 +14,7 @@ A complete NPM package that facilitates integration between Next.js and Laravel,
 ### 🔐 Laravel Sanctum Authentication
 - React Provider for authentication state management
 - `useAuth` hook for login/logout operations
+- **New: ACL Support (`useGate`, `<Can>`) for roles & permissions**
 - Next.js Middleware to protect routes
 - `withAuth` and `withGuest` HOCs for pages
 - SSR support with `getServerSideAuth`
@@ -164,6 +165,36 @@ export default createAuthMiddleware({
   loginRoute: '/login',
   publicRoutes: ['/', '/about'],
 });
+```
+
+### Access Control (ACL)
+
+```tsx
+import { useGate, Can } from 'next-laravel-bridge';
+
+function AdminPanel() {
+  const { can, hasRole } = useGate();
+
+  return (
+    <div>
+      <h1>Admin Panel</h1>
+      
+      {/* Component Way */}
+      <Can ability="edit-posts" else={<p>Access Denied</p>}>
+        <button>Edit Posts</button>
+      </Can>
+
+      {/* Hook Way */}
+      {hasRole('admin') && (
+        <button>Delete User</button>
+      )}
+      
+      {can('view-reports') && (
+        <ReportsComponent />
+      )}
+    </div>
+  );
+}
 ```
 
 ### Requests with Cache
