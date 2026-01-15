@@ -1,6 +1,6 @@
 {
   "name": "next-laravel-bridge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Un package NPM qui facilite l'intégration entre Next.js et Laravel avec authentification Sanctum, gestion des formulaires et configuration API centralisée",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
