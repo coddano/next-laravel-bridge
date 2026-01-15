@@ -370,9 +370,7 @@ npm run test:watch    # Watch mode
 npm run test:coverage # With coverage
 ```
 
-## 📚 Documentation
 
-See [ROADMAP.md](./ROADMAP.md) for planned features.
 
 ## 📄 License
 
