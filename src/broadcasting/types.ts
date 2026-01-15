@@ -1,76 +1,76 @@
 /**
- * Types pour le module Broadcasting (Laravel Echo)
+ * Broadcasting (Laravel Echo) module types
  */
 
 /**
- * Type de driver de broadcasting
+ * Broadcast driver type
  */
 export type BroadcastDriver = 'pusher' | 'socket.io' | 'soketi' | 'ably';
 
 /**
- * Configuration pour le broadcast
+ * Broadcast configuration
  */
 export interface BroadcastConfig {
-    /** Driver à utiliser */
+    /** Driver to use */
     driver: BroadcastDriver;
-    /** Clé d'application (Pusher/Soketi) */
+    /** Application Key (Pusher/Soketi) */
     key: string;
     /** Cluster (Pusher) */
     cluster?: string;
-    /** Host personnalisé (Soketi/Socket.io) */
+    /** Custom Host (Soketi/Socket.io) */
     host?: string;
-    /** Port personnalisé */
+    /** Custom Port */
     port?: number;
-    /** Utiliser HTTPS/WSS */
+    /** Use HTTPS/WSS */
     encrypted?: boolean;
-    /** Endpoint d'authentification (default: '/broadcasting/auth') */
+    /** Authentication endpoint (default: '/broadcasting/auth') */
     authEndpoint?: string;
-    /** Headers supplémentaires pour l'auth */
+    /** Additional credentials/headers for auth */
     authHeaders?: Record<string, string>;
-    /** Token d'authentification */
+    /** Authentication token */
     bearerToken?: string;
 }
 
 /**
- * Événement de channel
+ * Channel event
  */
 export interface ChannelEvent<T = unknown> {
-    /** Nom de l'événement */
+    /** Event Name */
     event: string;
-    /** Données de l'événement */
+    /** Event Data */
     data: T;
     /** Timestamp */
     timestamp: number;
 }
 
 /**
- * Membre d'un channel de présence
+ * Member of a presence channel
  */
 export interface PresenceMember {
-    /** ID unique du membre */
+    /** Unique Member ID */
     id: string | number;
-    /** Informations du membre */
+    /** Member Information */
     info: Record<string, unknown>;
 }
 
 /**
- * État d'un channel
+ * Channel State
  */
 export interface ChannelState {
-    /** Le channel est-il connecté ? */
+    /** Is the channel connected? */
     isConnected: boolean;
-    /** Erreur éventuelle */
+    /** Potential Error */
     error: Error | null;
-    /** Événements reçus */
+    /** Received Events */
     events: ChannelEvent[];
 }
 
 /**
- * État d'un channel de présence
+ * Presence Channel State
  */
 export interface PresenceChannelState extends ChannelState {
-    /** Membres actuels */
+    /** Current Members */
     members: PresenceMember[];
-    /** Membre actuel (self) */
+    /** Current Member (self) */
     me: PresenceMember | null;
 }

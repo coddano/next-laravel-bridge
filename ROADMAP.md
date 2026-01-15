@@ -1,57 +1,58 @@
 # 🗺️ Next-Laravel-Bridge Roadmap
 
 ## Vision
-Devenir LE package de référence pour connecter Next.js à Laravel, couvrant 100% des besoins d'intégration.
+Become THE reference package for connecting Next.js to Laravel, covering 100% of integration needs.
 
 ---
 
-## 📊 Architecture Cible
+## 📊 Target Architecture
 
 ```
 next-laravel-bridge/
 ├── src/
-│   ├── api/                    # Client API
+│   │
+│   ├── api/                    # API Client
 │   │   ├── LaravelApiClient.ts
 │   │   ├── ApiConfig.ts
 │   │   ├── interceptors.ts
 │   │   └── index.ts
 │   │
-│   ├── auth/                   # Authentification Sanctum
+│   ├── auth/                   # Sanctum Authentication
 │   │   ├── SanctumAuthProvider.tsx
 │   │   ├── useAuth.ts
-│   │   ├── AuthMiddleware.ts   # 🆕 Middleware Next.js
-│   │   ├── withAuth.tsx        # 🆕 HOC de protection
+│   │   ├── AuthMiddleware.ts   # 🆕 Next.js Middleware
+│   │   ├── withAuth.tsx        # 🆕 Protection HOC
 │   │   ├── types.ts
 │   │   └── index.ts
 │   │
-│   ├── forms/                  # Gestion des formulaires
+│   ├── forms/                  # Form Management
 │   │   ├── useLaravelForm.ts
 │   │   ├── LaravelForm.tsx
 │   │   ├── validation.ts
 │   │   └── index.ts
 │   │
-│   ├── query/                  # 🆕 React Query-like pour Laravel
+│   ├── query/                  # 🆕 React Query-like for Laravel
 │   │   ├── useLaravelQuery.ts
 │   │   ├── useLaravelMutation.ts
 │   │   ├── QueryProvider.tsx
 │   │   ├── cache.ts
 │   │   └── index.ts
 │   │
-│   ├── pagination/             # 🆕 Pagination Laravel
+│   ├── pagination/             # 🆕 Laravel Pagination
 │   │   ├── useLaravelPagination.ts
 │   │   ├── useCursorPagination.ts
 │   │   ├── PaginationControls.tsx
 │   │   ├── types.ts
 │   │   └── index.ts
 │   │
-│   ├── upload/                 # 🆕 Upload de fichiers
+│   ├── upload/                 # 🆕 File Upload
 │   │   ├── useLaravelUpload.ts
 │   │   ├── useMultiUpload.ts
 │   │   ├── UploadProgress.tsx
 │   │   ├── types.ts
 │   │   └── index.ts
 │   │
-│   ├── notifications/          # 🆕 Notifications toast
+│   ├── notifications/          # 🆕 Toast Notifications
 │   │   ├── useLaravelNotifications.ts
 │   │   ├── NotificationProvider.tsx
 │   │   ├── Toast.tsx
@@ -72,7 +73,7 @@ next-laravel-bridge/
 │   │   ├── types.ts
 │   │   └── index.ts
 │   │
-│   ├── testing/                # 🆕 Utilitaires de test
+│   ├── testing/                # 🆕 Test Utilities
 │   │   ├── MockAuthProvider.tsx
 │   │   ├── mockLaravelApi.ts
 │   │   ├── testUtils.ts
@@ -83,70 +84,70 @@ next-laravel-bridge/
 │   │   ├── constants.ts
 │   │   └── index.ts
 │   │
-│   └── index.ts                # Point d'entrée principal
+│   └── index.ts                # Main Entry Point
 ```
 
 ---
 
-## 🚀 Phases d'Implémentation
+## 🚀 Implementation Phases
 
-### Phase 1: Amélioration du Core (Semaine 1)
-**Objectif**: Solidifier les fondations existantes
+### Phase 1: Core Improvement (Week 1)
+**Goal**: Solidify existing foundations
 
-- [ ] **1.1** Remplacer tous les `any` par des types stricts
-- [ ] **1.2** Ajouter plus de tests (couvrir auth, forms)
-- [ ] **1.3** Améliorer la gestion des erreurs
-- [ ] **1.4** Ajouter retry logic avec backoff exponentiel
-- [ ] **1.5** Documentation JSDoc complète
+- [ ] **1.1** Replace all `any` with strict types
+- [ ] **1.2** Add more tests (cover auth, forms)
+- [ ] **1.3** Improve error handling
+- [ ] **1.4** Add retry logic with exponential backoff
+- [ ] **1.5** Complete JSDoc documentation
 
-### Phase 2: Query & Pagination (Semaine 2)
-**Objectif**: Faciliter les requêtes et la pagination
+### Phase 2: Query & Pagination (Week 2)
+**Goal**: Facilitate requests and pagination
 
-- [ ] **2.1** `useLaravelQuery` - Hook pour GET avec cache
-- [ ] **2.2** `useLaravelMutation` - Hook pour POST/PUT/DELETE
-- [ ] **2.3** `useLaravelPagination` - Pagination classique
-- [ ] **2.4** `useCursorPagination` - Pagination par curseur
-- [ ] **2.5** Composant `PaginationControls`
+- [ ] **2.1** `useLaravelQuery` - Hook for GET with cache
+- [ ] **2.2** `useLaravelMutation` - Hook for POST/PUT/DELETE
+- [ ] **2.3** `useLaravelPagination` - Standard pagination
+- [ ] **2.4** `useCursorPagination` - Cursor pagination
+- [ ] **2.5** `PaginationControls` component
 
-### Phase 3: Upload & Notifications (Semaine 3)
-**Objectif**: UX avancée
+### Phase 3: Upload & Notifications (Week 3)
+**Goal**: Advanced UX
 
-- [ ] **3.1** `useLaravelUpload` - Upload avec progress
-- [ ] **3.2** `useMultiUpload` - Upload multiple
-- [ ] **3.3** `useLaravelNotifications` - Gestion des toasts
-- [ ] **3.4** Composant `NotificationProvider`
-- [ ] **3.5** Composant `Toast` personnalisable
+- [ ] **3.1** `useLaravelUpload` - Upload with progress
+- [ ] **3.2** `useMultiUpload` - Multiple upload
+- [ ] **3.3** `useLaravelNotifications` - Toast management
+- [ ] **3.4** `NotificationProvider` component
+- [ ] **3.5** Customizable `Toast` component
 
-### Phase 4: Auth Avancée & SSR (Semaine 4)
-**Objectif**: Protection des routes et SSR
+### Phase 4: Advanced Auth & SSR (Week 4)
+**Goal**: Route protection and SSR
 
-- [ ] **4.1** Middleware Next.js pour auth
-- [ ] **4.2** HOC `withAuth` pour protéger les pages
-- [ ] **4.3** `getServerSideAuth` pour SSR
-- [ ] **4.4** Gestion des rôles et permissions
-- [ ] **4.5** Support Session-based auth
+- [ ] **4.1** Next.js Middleware for auth
+- [ ] **4.2** `withAuth` HOC to protect pages
+- [ ] **4.3** `getServerSideAuth` for SSR
+- [ ] **4.4** Role and permission management
+- [ ] **4.5** Session-based auth support
 
-### Phase 5: Broadcasting (Semaine 5)
-**Objectif**: Temps réel avec Laravel Echo
+### Phase 5: Broadcasting (Week 5)
+**Goal**: Real-time with Laravel Echo
 
-- [ ] **5.1** `EchoProvider` - Provider pour Echo
-- [ ] **5.2** `useChannel` - Écouter un channel public
-- [ ] **5.3** `usePrivateChannel` - Channel privé
-- [ ] **5.4** `usePresence` - Channel de présence
-- [ ] **5.5** Support Pusher & Soketi
+- [ ] **5.1** `EchoProvider` - Provider for Echo
+- [ ] **5.2** `useChannel` - Listen to public channel
+- [ ] **5.3** `usePrivateChannel` - Private channel
+- [ ] **5.4** `usePresence` - Presence channel
+- [ ] **5.5** Pusher & Soketi support
 
-### Phase 6: Testing & Polish (Semaine 6)
-**Objectif**: Qualité et documentation
+### Phase 6: Testing & Polish (Week 6)
+**Goal**: Quality and documentation
 
-- [ ] **6.1** Utilitaires de test (`MockAuthProvider`, etc.)
-- [ ] **6.2** Tests E2E avec exemple d'app
-- [ ] **6.3** Documentation complète avec Docusaurus
-- [ ] **6.4** Exemples de projets
-- [ ] **6.5** Badges et CI/CD complet
+- [ ] **6.1** Test utilities (`MockAuthProvider`, etc.)
+- [ ] **6.2** E2E tests with example app
+- [ ] **6.3** Complete documentation with Docusaurus
+- [ ] **6.4** Project examples
+- [ ] **6.5** Badges and complete CI/CD
 
 ---
 
-## 📖 Détails des Fonctionnalités
+## 📖 Feature Details
 
 ### 🔍 useLaravelQuery
 ```tsx
@@ -229,7 +230,7 @@ const { members, join, leave } = usePresence('room.1');
 
 ---
 
-## 📦 Installation Finale
+## 📦 Final Installation
 
 ```bash
 npm install next-laravel-bridge
@@ -261,18 +262,18 @@ export function Providers({ children }) {
 
 ---
 
-## 🎯 KPIs de Succès
+## 🎯 Success KPIs
 
-| Métrique | Objectif |
+| Metric | Goal |
 |----------|----------|
 | Tests | 100+ tests, >80% coverage |
-| Stars GitHub | 100+ |
-| Downloads NPM | 1000+/mois |
-| Issues résolues | <24h response time |
-| Documentation | 100% des APIs documentées |
+| GitHub Stars | 100+ |
+| NPM Downloads | 1000+/month |
+| Resolved Issues | <24h response time |
+| Documentation | 100% APIs documented |
 
 ---
 
 ## 🤝 Contribution
 
-Voir [CONTRIBUTING.md](./CONTRIBUTING.md) pour les guidelines.
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.

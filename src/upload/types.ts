@@ -1,87 +1,87 @@
 /**
- * Types pour l'upload de fichiers
+ * File upload types
  */
 
 /**
- * Options pour useLaravelUpload
+ * Options for useLaravelUpload
  */
 export interface UseLaravelUploadOptions {
-    /** Endpoint d'upload */
+    /** Upload endpoint */
     endpoint: string;
-    /** Taille maximale en bytes (default: 10MB) */
+    /** Max size in bytes (default: 10MB) */
     maxSize?: number;
-    /** Types MIME autorisés */
+    /** Allowed MIME types */
     allowedTypes?: string[];
-    /** Nom du champ de fichier (default: 'file') */
+    /** File field name (default: 'file') */
     fieldName?: string;
-    /** Callback de progression */
+    /** Progress callback */
     onProgress?: (percent: number) => void;
-    /** Callback de succès */
+    /** Success callback */
     onSuccess?: (response: UploadResponse) => void;
-    /** Callback d'erreur */
+    /** Error callback */
     onError?: (error: UploadError) => void;
-    /** Headers supplémentaires */
+    /** Additional headers */
     headers?: Record<string, string>;
 }
 
 /**
- * Réponse d'upload standard
+ * Standard upload response
  */
 export interface UploadResponse {
-    /** URL du fichier uploadé */
+    /** Uploaded file URL */
     url: string;
-    /** Chemin du fichier */
+    /** File path */
     path: string;
-    /** Nom original du fichier */
+    /** Original file name */
     originalName: string;
-    /** Taille en bytes */
+    /** Size in bytes */
     size: number;
-    /** Type MIME */
+    /** MIME Type */
     mimeType: string;
-    /** Données supplémentaires */
+    /** Additional data */
     [key: string]: unknown;
 }
 
 /**
- * Erreur d'upload
+ * Upload error
  */
 export interface UploadError {
-    /** Message d'erreur */
+    /** Error message */
     message: string;
-    /** Code d'erreur */
+    /** Error code */
     code: 'FILE_TOO_LARGE' | 'INVALID_TYPE' | 'UPLOAD_FAILED' | 'NETWORK_ERROR';
-    /** Détails supplémentaires */
+    /** Additional details */
     details?: unknown;
 }
 
 /**
- * État d'un fichier en upload
+ * State of an uploading file
  */
 export interface UploadFileState {
-    /** ID unique */
+    /** Unique ID */
     id: string;
-    /** Fichier */
+    /** File */
     file: File;
-    /** Progression (0-100) */
+    /** Progress (0-100) */
     progress: number;
-    /** Statut */
+    /** Status */
     status: 'pending' | 'uploading' | 'success' | 'error';
-    /** Réponse en cas de succès */
+    /** Response on success */
     response?: UploadResponse;
-    /** Erreur en cas d'échec */
+    /** Error on failure */
     error?: UploadError;
 }
 
 /**
- * Options pour useMultiUpload
+ * Options for useMultiUpload
  */
 export interface UseMultiUploadOptions extends Omit<UseLaravelUploadOptions, 'onSuccess' | 'onError'> {
-    /** Upload concurrent max (default: 3) */
+    /** Max concurrent uploads (default: 3) */
     maxConcurrent?: number;
-    /** Callback quand un fichier est uploadé */
+    /** Callback when a file is uploaded */
     onFileSuccess?: (file: File, response: UploadResponse) => void;
-    /** Callback quand un fichier échoue */
+    /** Callback when a file fails */
     onFileError?: (file: File, error: UploadError) => void;
-    /** Callback quand tous les fichiers sont traités */
+    /** Callback when all files are processed */
     onAllComplete?: (results: UploadFileState[]) => void;
 }

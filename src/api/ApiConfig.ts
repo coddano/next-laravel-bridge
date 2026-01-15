@@ -1,4 +1,4 @@
-// Configuration de l'API Laravel
+// Laravel API Configuration
 export interface LaravelApiConfig {
   baseURL: string;
   timeout?: number;

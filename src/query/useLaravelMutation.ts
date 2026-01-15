@@ -5,52 +5,52 @@ import { laravelApi } from '../api/LaravelApiClient';
 import { invalidateQuery } from './useLaravelQuery';
 
 /**
- * Type de méthode HTTP pour les mutations
+ * HTTP method type for mutations
  */
 export type MutationMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
 /**
- * Options pour useLaravelMutation
+ * Options for useLaravelMutation
  */
 export interface UseLaravelMutationOptions<TData, TVariables> {
-    /** Endpoint API */
+    /** API endpoint */
     endpoint: string;
-    /** Méthode HTTP (default: POST) */
+    /** HTTP method (default: POST) */
     method?: MutationMethod;
-    /** Callback en cas de succès */
+    /** Success callback */
     onSuccess?: (data: TData, variables: TVariables) => void;
-    /** Callback en cas d'erreur */
+    /** Error callback */
     onError?: (error: Error, variables: TVariables) => void;
-    /** Callback toujours appelé (succès ou erreur) */
+    /** Callback always called (success or error) */
     onSettled?: (data: TData | null, error: Error | null, variables: TVariables) => void;
-    /** Queries à invalider après succès */
+    /** Queries to invalidate upon success */
     invalidateQueries?: string[];
 }
 
 /**
- * État retourné par useLaravelMutation
+ * State returned by useLaravelMutation
  */
 export interface UseLaravelMutationResult<TData, TVariables> {
-    /** Fonction pour déclencher la mutation */
+    /** Function to trigger mutation */
     mutate: (variables: TVariables) => Promise<TData | null>;
-    /** Version async qui attend le résultat */
+    /** Async version that awaits result */
     mutateAsync: (variables: TVariables) => Promise<TData>;
-    /** Données de la dernière mutation réussie */
+    /** Data from last successful mutation */
     data: TData | null;
-    /** Indicateur de mutation en cours */
+    /** Mutation in progress indicator */
     isLoading: boolean;
-    /** Erreur éventuelle */
+    /** Potential error */
     error: Error | null;
-    /** Réinitialiser l'état */
+    /** Reset state */
     reset: () => void;
-    /** La mutation a-t-elle réussi ? */
+    /** Did the mutation succeed? */
     isSuccess: boolean;
-    /** La mutation a-t-elle échoué ? */
+    /** Did the mutation fail? */
     isError: boolean;
 }
 
 /**
- * Hook pour effectuer des mutations (POST, PUT, PATCH, DELETE) vers une API Laravel
+ * Hook to perform mutations (POST, PUT, PATCH, DELETE) to a Laravel API
  * 
  * @example
  * ```tsx
@@ -63,7 +63,7 @@ export interface UseLaravelMutationResult<TData, TVariables> {
  *   invalidateQueries: ['/api/users'],
  * });
  * 
- * // Utilisation
+ * // Usage
  * mutate({ name: 'John', email: 'john@example.com' });
  * ```
  */
@@ -120,7 +120,7 @@ export function useLaravelMutation<TData = unknown, TVariables = unknown>(
             setData(responseData);
             setIsSuccess(true);
 
-            // Invalider les queries spécifiées
+            // Invalidate specified queries
             invalidateQueries.forEach((query) => invalidateQuery(query));
 
             onSuccess?.(responseData, variables);

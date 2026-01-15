@@ -13,14 +13,14 @@ export interface WithAuthOptions {
     LoadingComponent?: ComponentType;
     /** Rôles requis (optionnel) */
     requiredRoles?: string[];
-    /** Permissions requises (optionnel) */
+    /** Required permissions (optional) */
     requiredPermissions?: string[];
-    /** Callback si non autorisé */
+    /** Callback if unauthorized */
     onUnauthorized?: () => void;
 }
 
 /**
- * Composant de chargement par défaut
+ * Default loading component
  */
 function DefaultLoadingComponent() {
     return (
@@ -52,7 +52,7 @@ function DefaultLoadingComponent() {
                         animation: 'spin 1s linear infinite',
                     }}
                 />
-                <span>Chargement...</span>
+                <span>Loading...</span>
                 <style>{`
           @keyframes spin {
             to { transform: rotate(360deg); }
@@ -64,7 +64,7 @@ function DefaultLoadingComponent() {
 }
 
 /**
- * HOC pour protéger une page/composant avec authentification
+ * HOC to protect a page/component with authentication
  * 
  * @example
  * ```tsx
@@ -142,12 +142,12 @@ export function withAuth<P extends object>(
             setIsChecking(false);
         }, [isLoading, isAuthenticated, user]);
 
-        // Afficher le loader pendant la vérification
+        // Show loader during verification
         if (isLoading || isChecking) {
             return <LoadingComponent />;
         }
 
-        // Non autorisé
+        // Unauthorized
         if (!isAuthorized) {
             return (
                 <div
@@ -162,10 +162,10 @@ export function withAuth<P extends object>(
                 >
                     <div style={{ fontSize: 48 }}>🔒</div>
                     <h1 style={{ fontSize: 24, fontWeight: 600, color: '#1f2937' }}>
-                        Accès non autorisé
+                        Access Denied
                     </h1>
                     <p style={{ color: '#6b7280' }}>
-                        Vous n&apos;avez pas les permissions nécessaires pour accéder à cette page.
+                        You don&apos;t have the required permissions to access this page.
                     </p>
                     <button
                         onClick={() => window.history.back()}
@@ -180,13 +180,13 @@ export function withAuth<P extends object>(
                             fontWeight: 500,
                         }}
                     >
-                        Retour
+                        Go Back
                     </button>
                 </div>
             );
         }
 
-        // Autorisé -> afficher le composant
+        // Authorized -> render component
         return <WrappedComponent {...props} />;
     }
 

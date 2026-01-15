@@ -1,43 +1,43 @@
 /**
  * next-laravel-bridge
  * 
- * Un package NPM complet pour l'intégration Next.js + Laravel
+ * Complete NPM package for Next.js + Laravel integration
  * 
  * @packageDocumentation
  */
 
 // ============================================
-// Auth - Authentification Laravel Sanctum
+// Auth - Laravel Sanctum Authentication
 // ============================================
 export * from './auth';
 
 // ============================================
-// API - Client HTTP pour Laravel
+// API - HTTP Client for Laravel
 // ============================================
 export * from './api';
 
 // ============================================
-// Forms - Gestion des formulaires Laravel
+// Forms - Laravel Form Management
 // ============================================
 export * from './forms';
 
 // ============================================
-// Query - Requêtes style React Query
+// Query - React Query Style Requests
 // ============================================
 export * from './query';
 
 // ============================================
-// Pagination - Pagination Laravel
+// Pagination - Laravel Pagination
 // ============================================
 export * from './pagination';
 
 // ============================================
-// Upload - Upload de fichiers
+// Upload - File Upload
 // ============================================
 export * from './upload';
 
 // ============================================
-// Notifications - Système de toasts
+// Notifications - Toast System
 // ============================================
 export * from './notifications';
 
@@ -52,17 +52,17 @@ export * from './broadcasting';
 export * from './ssr';
 
 // ============================================
-// Utils - Utilitaires
+// Utils - Utilities
 // ============================================
 export * from './utils';
 
 // ============================================
-// Hooks supplémentaires
+// Additional Hooks
 // ============================================
 export { useLaravelErrors } from './hooks';
 
 // ============================================
-// Testing - Utilitaires de test (import séparé recommandé)
+// Testing - Test Utilities (separate import recommended)
 // ============================================
-// Note: Pour les tests, importer depuis 'next-laravel-bridge/testing'
-// export * from './testing'; // Décommentez si vous voulez tout inclure
+// Note: For tests, import from 'next-laravel-bridge/testing'
+// export * from './testing'; // Uncomment if you want to include everything

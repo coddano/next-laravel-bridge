@@ -5,27 +5,27 @@ import { laravelApi } from '../api/LaravelApiClient';
 import type { LaravelCursorPaginatedResponse, UseCursorPaginationOptions } from './types';
 
 /**
- * État retourné par useCursorPagination
+ * State returned by useCursorPagination
  */
 export interface UseCursorPaginationResult<T> {
-    /** Données accumulées (toutes les pages chargées) */
+    /** Accumulated data (all loaded pages) */
     data: T[];
-    /** Indicateur de chargement */
+    /** Loading indicator */
     isLoading: boolean;
-    /** Indicateur de chargement de plus de données */
+    /** Indicator for loading more data */
     isFetchingMore: boolean;
-    /** Erreur éventuelle */
+    /** Potential error */
     error: Error | null;
-    /** Y a-t-il plus de données à charger ? */
+    /** Is there more data to load? */
     hasMore: boolean;
-    /** Charger plus de données */
+    /** Load more data */
     fetchMore: () => Promise<void>;
-    /** Réinitialiser et recharger */
+    /** Reset and reload */
     refetch: () => Promise<void>;
 }
 
 /**
- * Hook pour la pagination Laravel par curseur (infinite scroll)
+ * Hook for Laravel cursor pagination (infinite scroll)
  * 
  * @example
  * ```tsx
@@ -40,7 +40,7 @@ export interface UseCursorPaginationResult<T> {
  *   perPage: 20,
  * });
  * 
- * // Dans un IntersectionObserver ou bouton "Load More"
+ * // In an IntersectionObserver or "Load More" button
  * if (hasMore) {
  *   fetchMore();
  * }

@@ -6,56 +6,56 @@
 [![Tests](https://img.shields.io/badge/Tests-Passing-brightgreen.svg)](https://github.com/coddano/next-laravel-bridge)
 [![Build Status](https://github.com/coddano/next-laravel-bridge/workflows/CI/badge.svg)](https://github.com/coddano/next-laravel-bridge/actions)
 
-Un package NPM complet qui facilite l'intégration entre Next.js et Laravel, offrant des solutions prêtes à l'emploi pour l'authentification, la gestion des formulaires, les requêtes API, la pagination, les uploads et plus encore.
+A complete NPM package that facilitates integration between Next.js and Laravel, providing ready-to-use solutions for authentication, form management, API requests, pagination, uploads and more.
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-### 🔐 Authentification Laravel Sanctum
-- Provider React pour la gestion de l'état d'authentification
-- Hook `useAuth` pour les opérations de connexion/déconnexion
-- Middleware Next.js pour protéger les routes
-- HOC `withAuth` et `withGuest` pour les pages
-- Support SSR avec `getServerSideAuth`
+### 🔐 Laravel Sanctum Authentication
+- React Provider for authentication state management
+- `useAuth` hook for login/logout operations
+- Next.js Middleware to protect routes
+- `withAuth` and `withGuest` HOCs for pages
+- SSR support with `getServerSideAuth`
 
-### 🔍 Query (style React Query)
-- `useLaravelQuery` - Requêtes GET avec cache automatique
-- `useLaravelMutation` - Mutations POST/PUT/DELETE
-- Invalidation de cache automatique
-- Refetch automatique (window focus, interval)
+### 🔍 Query (React Query style)
+- `useLaravelQuery` - GET requests with automatic caching
+- `useLaravelMutation` - POST/PUT/DELETE mutations
+- Automatic cache invalidation
+- Automatic refetch (window focus, interval)
 
-### 📄 Pagination Laravel
-- `useLaravelPagination` - Pagination standard
-- `useCursorPagination` - Pagination par curseur (infinite scroll)
-- Navigation complète (next, prev, goTo)
+### 📄 Laravel Pagination
+- `useLaravelPagination` - Standard pagination
+- `useCursorPagination` - Cursor pagination (infinite scroll)
+- Complete navigation (next, prev, goTo)
 
-### 📁 Upload de Fichiers
-- `useLaravelUpload` - Upload simple avec progression
-- `useMultiUpload` - Upload multiple en parallèle
-- Validation (taille, type MIME)
-- Annulation d'upload
+### 📁 File Upload
+- `useLaravelUpload` - Simple upload with progress
+- `useMultiUpload` - Multiple parallel uploads
+- Validation (size, MIME type)
+- Upload cancellation
 
-### 🔔 Notifications Toast
-- `NotificationProvider` - Système de toasts
-- `useLaravelNotifications` - Hook pour notifier
+### 🔔 Toast Notifications
+- `NotificationProvider` - Toast system
+- `useLaravelNotifications` - Notification hook
 - Helpers: `success()`, `error()`, `warning()`, `info()`
-- Positions et durées personnalisables
+- Customizable positions and durations
 
 ### 📡 Broadcasting (Laravel Echo)
-- `EchoProvider` - Provider pour Laravel Echo
-- `useChannel` - Channels publics
-- `usePrivateChannel` - Channels privés
-- `usePresence` - Channels de présence
-- Support Pusher et Soketi
+- `EchoProvider` - Laravel Echo Provider
+- `useChannel` - Public channels
+- `usePrivateChannel` - Private channels
+- `usePresence` - Presence channels
+- Pusher and Soketi support
 
-### 📝 Gestion des Formulaires
-- `useLaravelForm` - Hook pour les formulaires
-- Mapping automatique des erreurs de validation Laravel
-- Support pour les validations complexes
+### 📝 Form Management
+- `useLaravelForm` - Hook for forms
+- Automatic Laravel validation error mapping
+- Support for complex validations
 
-### 🧪 Utilitaires de Test
-- `MockAuthProvider` - Auth mock pour les tests
-- Helpers pour mocker l'API Laravel
-- Utilitaires de test (wait, waitFor, etc.)
+### 🧪 Test Utilities
+- `MockAuthProvider` - Auth mock for tests
+- Helpers to mock Laravel API
+- Test utilities (wait, waitFor, etc.)
 
 ## 📦 Installation
 
@@ -63,14 +63,12 @@ Un package NPM complet qui facilite l'intégration entre Next.js et Laravel, off
 npm install next-laravel-bridge
 ```
 
-### Dépendances optionnelles
+### Optional Dependencies
 
-Pour utiliser le broadcasting (WebSockets):
+To use broadcasting (WebSockets):
 ```bash
 npm install laravel-echo pusher-js
 ```
-
-## 🔧 Configuration Rapide
 
 ### 1. Providers (App Router)
 
@@ -107,7 +105,7 @@ export default function RootLayout({ children }) {
 }
 ```
 
-### 2. Configuration de l'API
+### 2. API Configuration
 
 ```typescript
 import { LaravelApiClient } from 'next-laravel-bridge';
@@ -117,9 +115,9 @@ const apiClient = new LaravelApiClient({
 });
 ```
 
-## 📖 Utilisation
+## 📖 Usage
 
-### Authentification
+### Authentication
 
 ```tsx
 import { useAuth } from 'next-laravel-bridge';
@@ -140,7 +138,7 @@ function LoginForm() {
 }
 ```
 
-### Protection des Pages
+### Page Protection
 
 ```tsx
 // Avec HOC
@@ -167,7 +165,7 @@ export default createAuthMiddleware({
 });
 ```
 
-### Requêtes avec Cache
+### Requests with Cache
 
 ```tsx
 import { useLaravelQuery, useLaravelMutation } from 'next-laravel-bridge';
@@ -234,7 +232,7 @@ function PostList() {
 }
 ```
 
-### Upload de Fichiers
+### File Upload
 
 ```tsx
 import { useLaravelUpload } from 'next-laravel-bridge';
@@ -324,14 +322,14 @@ function ChatRoom() {
 
   return (
     <div>
-      <p>Status: {isConnected ? '🟢 Connecté' : '🔴 Déconnecté'}</p>
-      <p>Utilisateurs en ligne: {members.length}</p>
+      <p>Status: {isConnected ? '🟢 Connected' : '🔴 Disconnected'}</p>
+      <p>Users online: {members.length}</p>
     </div>
   );
 }
 ```
 
-## 🔧 Configuration Laravel
+## 🔧 Laravel Configuration
 
 ```php
 // app/Http/Kernel.php
@@ -347,35 +345,35 @@ protected $middlewareGroups = [
 'supports_credentials' => true,
 ```
 
-## 📁 Structure du Package
+## 📁 Package Structure
 
 ```
 src/
-├── api/           # Client API Laravel
-├── auth/          # Authentification Sanctum
-├── forms/         # Gestion des formulaires
-├── query/         # Requêtes style React Query
-├── pagination/    # Pagination Laravel
-├── upload/        # Upload de fichiers
-├── notifications/ # Système de toasts
+├── api/           # Laravel API Client
+├── auth/          # Sanctum Authentication
+├── forms/         # Form Management
+├── query/         # React Query style requests
+├── pagination/    # Laravel Pagination
+├── upload/        # File Upload
+├── notifications/ # Toast System
 ├── broadcasting/  # Laravel Echo / WebSockets
-├── ssr/           # Support SSR
-├── testing/       # Utilitaires de test
-└── utils/         # Helpers et constantes
+├── ssr/           # SSR Support
+├── testing/       # Test Utilities
+└── utils/         # Helpers and constants
 ```
 
 ## 🧪 Tests
 
 ```bash
-npm run test          # Lancer les tests
-npm run test:watch    # Mode watch
-npm run test:coverage # Avec coverage
+npm run test          # Run tests
+npm run test:watch    # Watch mode
+npm run test:coverage # With coverage
 ```
 
 ## 📚 Documentation
 
-Voir le [ROADMAP.md](./ROADMAP.md) pour les fonctionnalités planifiées.
+See [ROADMAP.md](./ROADMAP.md) for planned features.
 
-## 📄 Licence
+## 📄 License
 
 MIT © [Jourdan Totonde](https://github.com/coddano)

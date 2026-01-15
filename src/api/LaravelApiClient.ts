@@ -1,4 +1,4 @@
-// Client API pour Laravel avec gestion automatique des tokens et erreurs
+// API Client for Laravel with automatic token and error management
 import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 import { LaravelApiConfig, defaultConfig } from './ApiConfig';
 import {
@@ -19,16 +19,16 @@ export class LaravelApiClient {
   }
 
   private setupInterceptors(): void {
-    // Intercepteur de requête pour ajouter les tokens d'authentification
+    // Request interceptor to add authentication tokens
     this.client.interceptors.request.use(authInterceptor);
 
-    // Intercepteur de réponse pour traiter les réponses
+    // Response interceptor to handle responses
     this.client.interceptors.response.use(
       responseInterceptor,
       errorInterceptor
     );
 
-    // Intercepteur d'erreur pour gérer les erreurs de validation Laravel
+    // Error interceptor to handle Laravel validation errors
     this.client.interceptors.response.use(
       undefined,
       validationErrorInterceptor
@@ -36,7 +36,7 @@ export class LaravelApiClient {
   }
 
   /**
-   * Configure le client avec un nouveau token d'authentification
+   * Configures the client with a new authentication token
    */
   public setAuthToken(token: string): void {
     if (this.client.defaults.headers) {
@@ -46,7 +46,7 @@ export class LaravelApiClient {
   }
 
   /**
-   * Supprime le token d'authentification
+   * Removes the authentication token
    */
   public clearAuthToken(): void {
     if (this.client.defaults.headers?.common) {
@@ -55,7 +55,7 @@ export class LaravelApiClient {
   }
 
   /**
-   * Méthodes HTTP avec typage générique et gestion d'erreurs améliorée
+   * HTTP methods with generic typing and improved error handling
    */
   public async get<T = any>(url: string, config?: any): Promise<AxiosResponse<T>> {
     try {
@@ -98,30 +98,30 @@ export class LaravelApiClient {
   }
 
   /**
-   * Gestion personnalisée des erreurs
+   * Custom error handling
    */
   private handleError(error: AxiosError): AxiosError {
-    // Ajouter des informations supplémentaires sur l'erreur si nécessaire
+    // Add additional error information if necessary
     if (error.response?.status === 422 && (error.response.data as any)?.errors) {
-      console.warn('Erreur de validation Laravel:', error.response.data);
+      console.warn('Laravel validation error:', error.response.data);
     } else if (error.response?.status === 401) {
-      console.warn('Erreur d\'authentification');
+      console.warn('Authentication error');
     } else if (error.response?.status && error.response.status >= 500) {
-      console.error('Erreur serveur:', error.response.data);
+      console.error('Server error:', error.response.data);
     }
 
     return error;
   }
 
   /**
-   * Récupère la configuration actuelle
+   * Gets the current configuration
    */
   public getConfig(): LaravelApiConfig {
     return { ...this.config };
   }
 
   /**
-   * Met à jour la configuration
+   * Updates the configuration
    */
   public updateConfig(newConfig: Partial<LaravelApiConfig>): void {
     this.config = { ...this.config, ...newConfig };
@@ -129,10 +129,10 @@ export class LaravelApiClient {
   }
 }
 
-// Instance par défaut avec configuration automatique
+// Default instance with automatic configuration
 export const laravelApi = new LaravelApiClient();
 
-// Hook React pour utiliser le client API avec l'authentification
+// React Hook to use API client with authentication
 export const useLaravelApi = () => {
   return {
     api: laravelApi,

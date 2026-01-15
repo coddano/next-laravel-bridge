@@ -4,54 +4,54 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { laravelApi } from '../api/LaravelApiClient';
 
 /**
- * Options pour useLaravelQuery
+ * Options for useLaravelQuery
  */
 export interface UseLaravelQueryOptions<T> {
-    /** Endpoint API à appeler */
+    /** API endpoint to call */
     endpoint: string;
-    /** Paramètres de requête */
+    /** Request parameters */
     params?: Record<string, string | number | boolean | undefined>;
-    /** Durée de cache en millisecondes (default: 5 min) */
+    /** Cache duration in milliseconds (default: 5 min) */
     cacheTime?: number;
-    /** Durée avant que les données soient considérées stale (default: 0) */
+    /** Duration before data is considered stale (default: 0) */
     staleTime?: number;
-    /** Activer/désactiver la requête */
+    /** Enable/disable request */
     enabled?: boolean;
-    /** Callback en cas de succès */
+    /** Success callback */
     onSuccess?: (data: T) => void;
-    /** Callback en cas d'erreur */
+    /** Error callback */
     onError?: (error: Error) => void;
-    /** Refetch automatique sur focus window */
+    /** Automatic refetch on window focus */
     refetchOnWindowFocus?: boolean;
-    /** Intervalle de refetch automatique en ms (0 = désactivé) */
+    /** Automatic refetch interval in ms (0 = disabled) */
     refetchInterval?: number;
 }
 
 /**
- * État retourné par useLaravelQuery
+ * State returned by useLaravelQuery
  */
 export interface UseLaravelQueryResult<T> {
-    /** Données de la réponse */
+    /** Response data */
     data: T | null;
-    /** Indicateur de chargement initial */
+    /** Initial loading indicator */
     isLoading: boolean;
-    /** Indicateur de refetch en cours */
+    /** Refetching indicator */
     isFetching: boolean;
-    /** Erreur éventuelle */
+    /** Potential error */
     error: Error | null;
-    /** Fonction pour refetch manuellement */
+    /** Function to manually refetch */
     refetch: () => Promise<void>;
-    /** Indicateur si les données sont stale */
+    /** Stale data indicator */
     isStale: boolean;
-    /** Timestamp du dernier fetch réussi */
+    /** Timestamp of last successful fetch */
     dataUpdatedAt: number | null;
 }
 
-// Cache global simple
+// Simple global cache
 const queryCache = new Map<string, { data: unknown; timestamp: number }>();
 
 /**
- * Hook pour effectuer des requêtes GET vers une API Laravel avec cache
+ * Hook to perform GET requests to a Laravel API with cache
  * 
  * @example
  * ```tsx
@@ -83,7 +83,7 @@ export function useLaravelQuery<T = unknown>(
     const [error, setError] = useState<Error | null>(null);
     const [dataUpdatedAt, setDataUpdatedAt] = useState<number | null>(null);
 
-    // Générer une clé de cache unique
+    // Generate unique cache key
     const cacheKey = useRef('');
     cacheKey.current = `${endpoint}?${new URLSearchParams(
         Object.entries(params)
@@ -96,7 +96,7 @@ export function useLaravelQuery<T = unknown>(
     const fetchData = useCallback(async (isRefetch = false) => {
         if (!enabled) return;
 
-        // Vérifier le cache
+        // Check cache
         const cached = queryCache.get(cacheKey.current);
         if (cached && Date.now() - cached.timestamp < cacheTime && !isRefetch) {
             setData(cached.data as T);
@@ -116,7 +116,7 @@ export function useLaravelQuery<T = unknown>(
             const response = await laravelApi.get<T>(endpoint, { params });
             const responseData = response.data;
 
-            // Mettre en cache
+            // Cache data
             const now = Date.now();
             queryCache.set(cacheKey.current, { data: responseData, timestamp: now });
 
@@ -137,7 +137,7 @@ export function useLaravelQuery<T = unknown>(
         await fetchData(true);
     }, [fetchData]);
 
-    // Fetch initial
+    // Initial fetch
     useEffect(() => {
         fetchData();
     }, [fetchData]);
@@ -179,7 +179,7 @@ export function useLaravelQuery<T = unknown>(
 }
 
 /**
- * Fonction utilitaire pour invalider le cache
+ * Utility function to invalidate cache
  */
 export function invalidateQuery(endpoint: string): void {
     const keysToDelete: string[] = [];
@@ -192,7 +192,7 @@ export function invalidateQuery(endpoint: string): void {
 }
 
 /**
- * Fonction utilitaire pour vider tout le cache
+ * Utility function to clear entire cache
  */
 export function clearQueryCache(): void {
     queryCache.clear();

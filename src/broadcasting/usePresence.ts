@@ -5,26 +5,26 @@ import { useEcho } from './EchoProvider';
 import type { PresenceMember, PresenceChannelState } from './types';
 
 /**
- * Options pour usePresence
+ * Options for usePresence
  */
 export interface UsePresenceOptions {
-    /** Activer le channel (default: true) */
+    /** Enable channel (default: true) */
     enabled?: boolean;
 }
 
 /**
- * État retourné par usePresence
+ * State returned by usePresence
  */
 export interface UsePresenceResult extends PresenceChannelState {
-    /** Quitter le channel */
+    /** Leave channel */
     leave: () => void;
-    /** Écouter un événement personnalisé */
+    /** Listen to custom event */
     listen: <T = unknown>(event: string, callback: (data: T) => void) => void;
 }
 
 /**
- * Hook pour les channels de présence Laravel Echo
- * Permet de voir qui est présent sur un channel et d'être notifié des arrivées/départs
+ * Hook for Laravel Echo presence channels
+ * Allows viewing who is present on a channel and being notified of arrivals/departures
  * 
  * @example
  * ```tsx
@@ -99,11 +99,11 @@ export function usePresence(
                     setIsConnected(false);
                 });
 
-            // Déterminer "me" à partir du premier membre avec un ID correspondant
-            // Note: Cela dépend de la structure de votre auth
+            // Determine "me" from first member with matching ID
+            // Note: This depends on your auth structure
             channel.subscribed(() => {
-                // Le premier appel here() aura déjà défini les membres
-                // On peut essayer de récupérer l'utilisateur actuel d'une autre manière si nécessaire
+                // The first here() call will have already defined members
+                // We can try to retrieve the current user another way if necessary
             });
 
             return () => {

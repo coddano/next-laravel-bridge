@@ -1,9 +1,9 @@
 /**
- * Types pour la pagination Laravel
+ * Laravel pagination types
  */
 
 /**
- * Réponse de pagination Laravel standard (page-based)
+ * Standard Laravel pagination response (page-based)
  */
 export interface LaravelPaginatedResponse<T> {
     data: T[];
@@ -22,7 +22,7 @@ export interface LaravelPaginatedResponse<T> {
 }
 
 /**
- * Lien de pagination
+ * Pagination link
  */
 export interface PaginationLink {
     url: string | null;
@@ -31,7 +31,7 @@ export interface PaginationLink {
 }
 
 /**
- * Réponse de pagination par curseur Laravel
+ * Laravel cursor pagination response
  */
 export interface LaravelCursorPaginatedResponse<T> {
     data: T[];
@@ -44,31 +44,31 @@ export interface LaravelCursorPaginatedResponse<T> {
 }
 
 /**
- * Options pour useLaravelPagination
+ * Options for useLaravelPagination
  */
 export interface UsePaginationOptions {
-    /** Endpoint API */
+    /** API Endpoint */
     endpoint: string;
-    /** Nombre d'items par page (default: 15) */
+    /** Items per page (default: 15) */
     perPage?: number;
-    /** Page initiale (default: 1) */
+    /** Initial page (default: 1) */
     initialPage?: number;
-    /** Paramètres supplémentaires */
+    /** Additional parameters */
     params?: Record<string, string | number | boolean | undefined>;
-    /** Activer/désactiver la requête */
+    /** Enable/disable request */
     enabled?: boolean;
 }
 
 /**
- * Options pour useCursorPagination
+ * Options for useCursorPagination
  */
 export interface UseCursorPaginationOptions {
-    /** Endpoint API */
+    /** API Endpoint */
     endpoint: string;
-    /** Nombre d'items par page (default: 15) */
+    /** Items per page (default: 15) */
     perPage?: number;
-    /** Paramètres supplémentaires */
+    /** Additional parameters */
     params?: Record<string, string | number | boolean | undefined>;
-    /** Activer/désactiver la requête */
+    /** Enable/disable request */
     enabled?: boolean;
 }

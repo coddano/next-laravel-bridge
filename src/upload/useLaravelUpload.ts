@@ -7,41 +7,41 @@ import { STORAGE_KEYS } from '../utils/constants';
 import type { UseLaravelUploadOptions, UploadResponse, UploadError } from './types';
 
 /**
- * État retourné par useLaravelUpload
+ * State returned by useLaravelUpload
  */
 export interface UseLaravelUploadResult {
-    /** Fonction pour uploader un fichier */
+    /** Function to upload a file */
     upload: (file: File, additionalData?: Record<string, string>) => Promise<UploadResponse | null>;
-    /** Progression (0-100) */
+    /** Progress (0-100) */
     progress: number;
-    /** Upload en cours */
+    /** Upload in progress */
     isUploading: boolean;
-    /** Erreur éventuelle */
+    /** Error if any */
     error: UploadError | null;
-    /** Dernière réponse réussie */
+    /** Last successful response */
     result: UploadResponse | null;
-    /** Réinitialiser l'état */
+    /** Reset state */
     reset: () => void;
 }
 
 /**
- * Valider un fichier avant upload
+ * Validate a file before upload
  */
 function validateFile(
     file: File,
     maxSize: number,
     allowedTypes: string[]
 ): UploadError | null {
-    // Vérifier la taille
+    // Check size
     if (file.size > maxSize) {
         return {
-            message: `Le fichier est trop volumineux. Taille max: ${(maxSize / 1024 / 1024).toFixed(1)}MB`,
+            message: `File is too large. Max size: ${(maxSize / 1024 / 1024).toFixed(1)}MB`,
             code: 'FILE_TOO_LARGE',
             details: { maxSize, fileSize: file.size },
         };
     }
 
-    // Vérifier le type MIME
+    // Check MIME type
     if (allowedTypes.length > 0) {
         const isAllowed = allowedTypes.some((type) => {
             if (type.endsWith('/*')) {
@@ -53,7 +53,7 @@ function validateFile(
 
         if (!isAllowed) {
             return {
-                message: `Type de fichier non autorisé: ${file.type}`,
+                message: `File type not allowed: ${file.type}`,
                 code: 'INVALID_TYPE',
                 details: { allowedTypes, fileType: file.type },
             };
@@ -64,7 +64,7 @@ function validateFile(
 }
 
 /**
- * Hook pour uploader un fichier vers Laravel avec progression
+ * Hook to upload a file to Laravel with progress tracking
  * 
  * @example
  * ```tsx
@@ -76,7 +76,7 @@ function validateFile(
  *   onSuccess: (response) => console.log('Uploaded:', response),
  * });
  * 
- * // Utilisation
+ * // Usage
  * const handleFileChange = (e) => {
  *   const file = e.target.files[0];
  *   if (file) {
@@ -114,10 +114,10 @@ export function useLaravelUpload(
         file: File,
         additionalData?: Record<string, string>
     ): Promise<UploadResponse | null> => {
-        // Réinitialiser l'état
+        // Reset state
         reset();
 
-        // Valider le fichier
+        // Validate file
         const validationError = validateFile(file, maxSize, allowedTypes);
         if (validationError) {
             setError(validationError);
@@ -128,21 +128,21 @@ export function useLaravelUpload(
         setIsUploading(true);
 
         try {
-            // Créer le FormData
+            // Create FormData
             const formData = new FormData();
             formData.append(fieldName, file);
 
-            // Ajouter les données supplémentaires
+            // Add additional data
             if (additionalData) {
                 Object.entries(additionalData).forEach(([key, value]) => {
                     formData.append(key, value);
                 });
             }
 
-            // Récupérer le token d'auth
+            // Get auth token
             const token = getCookie(STORAGE_KEYS.ACCESS_TOKEN);
 
-            // Faire la requête avec progression
+            // Make request with progress
             const response = await axios.post<UploadResponse>(endpoint, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',

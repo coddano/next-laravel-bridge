@@ -5,49 +5,49 @@ import { laravelApi } from '../api/LaravelApiClient';
 import type { LaravelPaginatedResponse, UsePaginationOptions } from './types';
 
 /**
- * État retourné par useLaravelPagination
+ * State returned by useLaravelPagination
  */
 export interface UseLaravelPaginationResult<T> {
-    /** Données de la page courante */
+    /** Current page data */
     data: T[];
-    /** Page courante */
+    /** Current page */
     currentPage: number;
-    /** Dernière page */
+    /** Last page */
     lastPage: number;
-    /** Total d'items */
+    /** Total items */
     total: number;
-    /** Items par page */
+    /** Items per page */
     perPage: number;
-    /** Index du premier item affiché */
+    /** Index of first item displayed */
     from: number | null;
-    /** Index du dernier item affiché */
+    /** Index of last item displayed */
     to: number | null;
-    /** Indicateur de chargement */
+    /** Loading indicator */
     isLoading: boolean;
-    /** Erreur éventuelle */
+    /** Potential error */
     error: Error | null;
-    /** Aller à une page spécifique */
+    /** Go to a specific page */
     goToPage: (page: number) => void;
-    /** Aller à la page suivante */
+    /** Go to next page */
     nextPage: () => void;
-    /** Aller à la page précédente */
+    /** Go to previous page */
     prevPage: () => void;
-    /** Aller à la première page */
+    /** Go to first page */
     firstPage: () => void;
-    /** Aller à la dernière page */
+    /** Go to last page */
     lastPageFn: () => void;
-    /** Y a-t-il une page suivante ? */
+    /** Is there a next page? */
     hasNextPage: boolean;
-    /** Y a-t-il une page précédente ? */
+    /** Is there a previous page? */
     hasPrevPage: boolean;
-    /** Rafraîchir les données */
+    /** Refresh data */
     refetch: () => Promise<void>;
-    /** Changer le nombre d'items par page */
+    /** Change number of items per page */
     setPerPage: (perPage: number) => void;
 }
 
 /**
- * Hook pour la pagination Laravel standard (page-based)
+ * Hook for standard Laravel pagination (page-based)
  * 
  * @example
  * ```tsx

@@ -4,8 +4,8 @@ import React, { createContext, useContext, useEffect, useState, ReactNode, useCa
 import type { BroadcastConfig } from './types';
 
 /**
- * Interface Echo (compatible avec laravel-echo)
- * Note: L'utilisateur doit installer laravel-echo et pusher-js séparément
+ * Echo Interface (compatible with laravel-echo)
+ * Note: User must install laravel-echo and pusher-js separately
  */
 interface EchoInstance {
     channel(name: string): ChannelInstance;
@@ -33,33 +33,33 @@ interface PresenceChannelInstance extends ChannelInstance {
 }
 
 /**
- * Contexte Echo
+ * Echo Context
  */
 interface EchoContextValue {
-    /** Instance Echo */
+    /** Echo Instance */
     echo: EchoInstance | null;
-    /** Est connecté ? */
+    /** Is connected? */
     isConnected: boolean;
-    /** Erreur de connexion */
+    /** Connection error */
     error: Error | null;
-    /** Reconnecter */
+    /** Reconnect */
     reconnect: () => void;
 }
 
 const EchoContext = createContext<EchoContextValue | null>(null);
 
 /**
- * Props du EchoProvider
+ * EchoProvider Props
  */
 interface EchoProviderProps {
     children: ReactNode;
     config: BroadcastConfig;
-    /** Auto-connect au montage (default: true) */
+    /** Auto-connect on mount (default: true) */
     autoConnect?: boolean;
 }
 
 /**
- * Provider pour Laravel Echo
+ * Provider for Laravel Echo
  * 
  * @example
  * ```tsx
@@ -82,7 +82,7 @@ interface EchoProviderProps {
  * }
  * ```
  * 
- * Note: Vous devez installer laravel-echo et pusher-js:
+ * Note: You must install laravel-echo and pusher-js:
  * npm install laravel-echo pusher-js
  */
 export function EchoProvider({
@@ -96,15 +96,15 @@ export function EchoProvider({
 
     const connect = useCallback(async () => {
         try {
-            // Import dynamique de laravel-echo
+            // Dynamic import of laravel-echo
             const { default: Echo } = await import('laravel-echo');
 
-            // Import du driver approprié
+            // Import appropriate driver
             let pusher;
             if (config.driver === 'pusher' || config.driver === 'soketi') {
                 const PusherModule = await import('pusher-js');
                 pusher = PusherModule.default;
-                // @ts-expect-error - Pusher doit être global pour Echo
+                // @ts-expect-error - Pusher must be global for Echo
                 window.Pusher = pusher;
             }
 
@@ -116,7 +116,7 @@ export function EchoProvider({
                 authEndpoint: config.authEndpoint || '/broadcasting/auth',
             };
 
-            // Configuration Soketi/Self-hosted
+            // Soketi/Self-hosted configuration
             if (config.driver === 'soketi' || config.host) {
                 echoConfig.wsHost = config.host;
                 echoConfig.wsPort = config.port || 6001;
@@ -124,7 +124,7 @@ export function EchoProvider({
                 echoConfig.enabledTransports = ['ws', 'wss'];
             }
 
-            // Headers d'authentification
+            // Authentication headers
             if (config.bearerToken || config.authHeaders) {
                 echoConfig.auth = {
                     headers: {
@@ -183,7 +183,7 @@ export function EchoProvider({
 }
 
 /**
- * Hook pour accéder à l'instance Echo
+ * Hook to access Echo instance
  */
 export function useEcho(): EchoContextValue {
     const context = useContext(EchoContext);

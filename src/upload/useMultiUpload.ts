@@ -7,38 +7,38 @@ import { STORAGE_KEYS } from '../utils/constants';
 import type { UseMultiUploadOptions, UploadFileState, UploadResponse, UploadError } from './types';
 
 /**
- * Générer un ID unique
+ * Generate unique ID
  */
 function generateId(): string {
     return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
 /**
- * État retourné par useMultiUpload
+ * State returned by useMultiUpload
  */
 export interface UseMultiUploadResult {
-    /** Fichiers en cours d'upload */
+    /** Files being uploaded */
     files: UploadFileState[];
-    /** Ajouter des fichiers à la queue */
+    /** Add files to queue */
     addFiles: (files: FileList | File[]) => void;
-    /** Retirer un fichier de la queue */
+    /** Remove file from queue */
     removeFile: (id: string) => void;
-    /** Démarrer l'upload de tous les fichiers en attente */
+    /** Start upload of all pending files */
     startUpload: () => Promise<void>;
-    /** Upload en cours */
+    /** Upload in progress */
     isUploading: boolean;
-    /** Progression globale (0-100) */
+    /** Overall progress (0-100) */
     overallProgress: number;
-    /** Réinitialiser tout */
+    /** Reset all */
     reset: () => void;
-    /** Nombre de fichiers réussis */
+    /** Number of successful files */
     successCount: number;
-    /** Nombre de fichiers échoués */
+    /** Number of failed files */
     errorCount: number;
 }
 
 /**
- * Hook pour uploader plusieurs fichiers en parallèle
+ * Hook to upload multiple files in parallel
  * 
  * @example
  * ```tsx
@@ -57,7 +57,7 @@ export interface UseMultiUploadResult {
  *   onAllComplete: (results) => console.log('All done:', results),
  * });
  * 
- * // Dans un input file
+ * // In a file input
  * <input type="file" multiple onChange={(e) => addFiles(e.target.files)} />
  * <button onClick={startUpload} disabled={isUploading}>Upload All</button>
  * ```
@@ -92,7 +92,7 @@ export function useMultiUpload(
     const validateFile = useCallback((file: File): UploadError | null => {
         if (file.size > maxSize) {
             return {
-                message: `Fichier trop volumineux: ${file.name}`,
+                message: `File too large: ${file.name}`,
                 code: 'FILE_TOO_LARGE',
             };
         }
@@ -107,7 +107,7 @@ export function useMultiUpload(
 
             if (!isAllowed) {
                 return {
-                    message: `Type non autorisé: ${file.type}`,
+                    message: `Type not allowed: ${file.type}`,
                     code: 'INVALID_TYPE',
                 };
             }
@@ -133,7 +133,7 @@ export function useMultiUpload(
     }, [validateFile]);
 
     const removeFile = useCallback((id: string) => {
-        // Annuler l'upload si en cours
+        // Cancel upload if in progress
         const controller = abortControllersRef.current.get(id);
         if (controller) {
             controller.abort();
@@ -146,11 +146,11 @@ export function useMultiUpload(
     const uploadFile = useCallback(async (fileState: UploadFileState): Promise<void> => {
         const { id, file } = fileState;
 
-        // Créer un AbortController pour pouvoir annuler
+        // Create AbortController to allow cancellation
         const controller = new AbortController();
         abortControllersRef.current.set(id, controller);
 
-        // Mettre à jour le statut
+        // Update status
         setFiles((prev) =>
             prev.map((f) => (f.id === id ? { ...f, status: 'uploading' as const } : f))
         );
@@ -179,7 +179,7 @@ export function useMultiUpload(
                 },
             });
 
-            // Succès
+            // Success
             setFiles((prev) =>
                 prev.map((f) =>
                     f.id === id
@@ -191,7 +191,7 @@ export function useMultiUpload(
             onFileSuccess?.(file, response.data);
         } catch (err) {
             if (axios.isCancel(err)) {
-                return; // Annulé, pas d'erreur
+                return; // Cancelled, no error
             }
 
             const error: UploadError = {
@@ -218,12 +218,12 @@ export function useMultiUpload(
 
         setIsUploading(true);
 
-        // Upload en parallèle avec limite de concurrence
+        // Parallel upload with concurrency limit
         const queue = [...pendingFiles];
         const executing: Promise<void>[] = [];
 
         while (queue.length > 0 || executing.length > 0) {
-            // Ajouter des uploads jusqu'à la limite
+            // Add uploads up to limit
             while (queue.length > 0 && executing.length < maxConcurrent) {
                 const fileState = queue.shift()!;
                 const promise = uploadFile(fileState).then(() => {
@@ -233,7 +233,7 @@ export function useMultiUpload(
                 executing.push(promise);
             }
 
-            // Attendre qu'un upload se termine
+            // Wait for an upload to finish
             if (executing.length > 0) {
                 await Promise.race(executing);
             }
@@ -241,7 +241,7 @@ export function useMultiUpload(
 
         setIsUploading(false);
 
-        // Callback final
+        // Final callback
         setFiles((current) => {
             onAllComplete?.(current);
             return current;
@@ -249,7 +249,7 @@ export function useMultiUpload(
     }, [files, maxConcurrent, uploadFile, onAllComplete]);
 
     const reset = useCallback(() => {
-        // Annuler tous les uploads en cours
+        // Cancel all ongoing uploads
         abortControllersRef.current.forEach((controller) => controller.abort());
         abortControllersRef.current.clear();
 

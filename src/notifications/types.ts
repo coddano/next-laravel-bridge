@@ -1,14 +1,14 @@
 /**
- * Types pour les notifications
+ * Notification types
  */
 
 /**
- * Type de notification
+ * Notification type
  */
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
 /**
- * Position des notifications
+ * Notification position
  */
 export type NotificationPosition =
     | 'top-left'
@@ -19,24 +19,24 @@ export type NotificationPosition =
     | 'bottom-right';
 
 /**
- * Notification individuelle
+ * Individual notification
  */
 export interface Notification {
-    /** ID unique */
+    /** Unique ID */
     id: string;
-    /** Type de notification */
+    /** Notification type */
     type: NotificationType;
-    /** Titre */
+    /** Title */
     title?: string;
     /** Message */
     message: string;
-    /** Durée avant auto-dismiss (ms, 0 = permanent) */
+    /** Duration before auto-dismiss (ms, 0 = permanent) */
     duration?: number;
-    /** Peut être fermée manuellement */
+    /** Can be dismissed manually */
     dismissible?: boolean;
-    /** Timestamp de création */
+    /** Creation timestamp */
     createdAt: number;
-    /** Action optionnelle */
+    /** Optional action */
     action?: {
         label: string;
         onClick: () => void;
@@ -44,20 +44,20 @@ export interface Notification {
 }
 
 /**
- * Options pour créer une notification
+ * Options for creating a notification
  */
 export interface NotificationOptions {
-    /** Type de notification */
+    /** Notification type */
     type: NotificationType;
-    /** Titre */
+    /** Title */
     title?: string;
     /** Message */
     message: string;
-    /** Durée avant auto-dismiss (ms, default: 5000, 0 = permanent) */
+    /** Duration before auto-dismiss (ms, default: 5000, 0 = permanent) */
     duration?: number;
-    /** Peut être fermée manuellement (default: true) */
+    /** Can be dismissed manually (default: true) */
     dismissible?: boolean;
-    /** Action optionnelle */
+    /** Optional action */
     action?: {
         label: string;
         onClick: () => void;
@@ -65,14 +65,14 @@ export interface NotificationOptions {
 }
 
 /**
- * Configuration du NotificationProvider
+ * NotificationProvider configuration
  */
 export interface NotificationProviderConfig {
-    /** Position des notifications (default: top-right) */
+    /** Notification position (default: top-right) */
     position?: NotificationPosition;
-    /** Durée par défaut (default: 5000ms) */
+    /** Default duration (default: 5000ms) */
     defaultDuration?: number;
-    /** Nombre max de notifications visibles (default: 5) */
+    /** Max number of visible notifications (default: 5) */
     maxNotifications?: number;
     /** Z-index (default: 9999) */
     zIndex?: number;

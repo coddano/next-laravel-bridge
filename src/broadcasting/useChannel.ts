@@ -5,31 +5,31 @@ import { useEcho } from './EchoProvider';
 import type { ChannelEvent, ChannelState } from './types';
 
 /**
- * Options pour useChannel
+ * Options for useChannel
  */
 export interface UseChannelOptions {
-    /** Activer le channel (default: true) */
+    /** Enable channel (default: true) */
     enabled?: boolean;
-    /** Garder l'historique des événements (default: true) */
+    /** Keep event history (default: true) */
     keepHistory?: boolean;
-    /** Nombre max d'événements dans l'historique (default: 100) */
+    /** Max events in history (default: 100) */
     maxHistory?: number;
 }
 
 /**
- * État retourné par useChannel
+ * State returned by useChannel
  */
 export interface UseChannelResult extends ChannelState {
-    /** S'abonner à un événement */
+    /** Subscribe to an event */
     listen: <T = unknown>(event: string, callback: (data: T) => void) => void;
-    /** Se désabonner d'un événement */
+    /** Unsubscribe from an event */
     stopListening: (event: string) => void;
-    /** Quitter le channel */
+    /** Leave channel */
     leave: () => void;
 }
 
 /**
- * Hook pour écouter un channel public Laravel Echo
+ * Hook to listen to a public Laravel Echo channel
  * 
  * @example
  * ```tsx
@@ -106,7 +106,7 @@ export function useChannel(
                     setIsConnected(false);
                 });
 
-            // Écouter les événements configurés
+            // Listen to configured events
             Object.entries(eventHandlers).forEach(([event, handler]) => {
                 channel.listen(event, (data: unknown) => {
                     addEvent(event, data);
@@ -157,11 +157,11 @@ export function useChannel(
 }
 
 /**
- * Hook pour écouter un channel privé Laravel Echo
+ * Hook to listen to a private Laravel Echo channel
  * 
  * @example
  * ```tsx
- * // Channel privé (nécessite authentification)
+ * // Private channel (requires authentication)
  * const { events } = usePrivateChannel('orders.123', {
  *   'OrderShipped': (order) => console.log('Order shipped:', order),
  * });
@@ -217,7 +217,7 @@ export function usePrivateChannel(
                     setIsConnected(false);
                 });
 
-            // Écouter les événements configurés
+            // Listen to configured events
             Object.entries(eventHandlers).forEach(([event, handler]) => {
                 channel.listen(event, (data: unknown) => {
                     addEvent(event, data);

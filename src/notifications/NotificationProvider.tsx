@@ -9,14 +9,14 @@ import type {
 } from './types';
 
 /**
- * Générer un ID unique
+ * Generate unique ID
  */
 function generateId(): string {
     return `notification-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
 /**
- * Contexte des notifications
+ * Notification context
  */
 interface NotificationContextValue {
     notifications: Notification[];
@@ -32,14 +32,14 @@ interface NotificationContextValue {
 const NotificationContext = createContext<NotificationContextValue | null>(null);
 
 /**
- * Props du NotificationProvider
+ * NotificationProvider Props
  */
 interface NotificationProviderProps extends NotificationProviderConfig {
     children: ReactNode;
 }
 
 /**
- * Styles inline pour les positions
+ * Inline styles for positions
  */
 const positionStyles: Record<NotificationPosition, React.CSSProperties> = {
     'top-left': { top: 16, left: 16 },
@@ -51,7 +51,7 @@ const positionStyles: Record<NotificationPosition, React.CSSProperties> = {
 };
 
 /**
- * Styles pour les types de notification
+ * Styles for notification types
  */
 const typeStyles: Record<string, React.CSSProperties> = {
     success: {
@@ -73,11 +73,11 @@ const typeStyles: Record<string, React.CSSProperties> = {
 };
 
 /**
- * Provider pour les notifications
+ * Provider for notifications
  * 
  * @example
  * ```tsx
- * // Dans app/layout.tsx ou providers.tsx
+ * // In app/layout.tsx or providers.tsx
  * import { NotificationProvider } from 'next-laravel-bridge';
  * 
  * export default function RootLayout({ children }) {
@@ -121,7 +121,7 @@ export function NotificationProvider({
 
         setNotifications((prev) => {
             const updated = [notification, ...prev];
-            // Limiter le nombre de notifications
+            // Limit the number of notifications
             if (updated.length > maxNotifications) {
                 return updated.slice(0, maxNotifications);
             }
@@ -138,7 +138,7 @@ export function NotificationProvider({
         return id;
     }, [defaultDuration, maxNotifications, dismiss]);
 
-    // Helpers pour les types courants
+    // Helpers for common types
     const success = useCallback((message: string, title?: string) => {
         return notify({ type: 'success', message, title });
     }, [notify]);
@@ -170,7 +170,7 @@ export function NotificationProvider({
         <NotificationContext.Provider value={value}>
             {children}
 
-            {/* Container des notifications */}
+            {/* Notifications container */}
             <div
                 style={{
                     position: 'fixed',
@@ -224,7 +224,7 @@ export function NotificationProvider({
                                         fontSize: 18,
                                         lineHeight: 1,
                                     }}
-                                    aria-label="Fermer"
+                                    aria-label="Close"
                                 >
                                     ×
                                 </button>
@@ -269,12 +269,12 @@ export function NotificationProvider({
           }
         }
       `}</style>
-        </NotificationContext.Provider>
+        </NotificationContext.Provider >
     );
 }
 
 /**
- * Hook pour utiliser les notifications
+ * Hook to use notifications
  * 
  * @example
  * ```tsx
@@ -284,9 +284,9 @@ export function NotificationProvider({
  *   const handleSave = async () => {
  *     try {
  *       await saveData();
- *       success('Données enregistrées !', 'Succès');
+ *       success('Data saved!', 'Success');
  *     } catch (e) {
- *       error('Une erreur est survenue', 'Erreur');
+ *       error('An error occurred', 'Error');
  *     }
  *   };
  * }
