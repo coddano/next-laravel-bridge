@@ -245,3 +245,4 @@ docs/
 
 # Linting - keep config in repo
 prettier.config.js
+ROADMAP.md
