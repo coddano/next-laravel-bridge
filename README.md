@@ -402,7 +402,9 @@ npm run test:watch    # Watch mode
 npm run test:coverage # With coverage
 ```
 
+## 📚 Documentation
 
+Full documentation is available at [next-laravel-bridge.vercel.app](https://next-laravel-bridge.vercel.app).
 
 ## 📄 License
 
