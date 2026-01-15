@@ -236,7 +236,7 @@ Thumbs.db
 # tests/  # Uncomment to ignore test directory
 
 # Documentation source
-docs/
+/docs/
 
 # Development files - keep config files in repo
 
