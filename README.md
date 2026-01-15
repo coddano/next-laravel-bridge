@@ -131,7 +131,7 @@ function LoginForm() {
   };
 
   if (user) {
-    return <button onClick={logout}>Logout</button>;
+    return <button onClick={logout}>Déconnexion</button>;
   }
 
   return <form onSubmit={handleSubmit}>...</form>;
@@ -141,11 +141,11 @@ function LoginForm() {
 ### Page Protection
 
 ```tsx
-// With HOC
+// Avec HOC
 import { withAuth } from 'next-laravel-bridge';
 
 function DashboardPage() {
-  return <div>Protected Dashboard</div>;
+  return <div>Dashboard protégé</div>;
 }
 
 export default withAuth(DashboardPage, {
@@ -155,7 +155,7 @@ export default withAuth(DashboardPage, {
 ```
 
 ```ts
-// With Middleware (middleware.ts)
+// Avec Middleware (middleware.ts)
 import { createAuthMiddleware } from 'next-laravel-bridge';
 
 export default createAuthMiddleware({
@@ -181,14 +181,14 @@ function UserList() {
     endpoint: '/api/users',
     method: 'POST',
     invalidateQueries: ['/api/users'],
-    onSuccess: () => alert('User created!'),
+    onSuccess: () => alert('Utilisateur créé !'),
   });
 
   return (
     <div>
       {users?.map(user => <UserCard key={user.id} user={user} />)}
       <button onClick={() => createUser({ name: 'John' })}>
-        Add
+        Ajouter
       </button>
     </div>
   );
@@ -220,11 +220,11 @@ function PostList() {
       
       <div>
         <button onClick={prevPage} disabled={currentPage === 1}>
-          Previous
+          Précédent
         </button>
         <span>{currentPage} / {lastPage}</span>
         <button onClick={nextPage} disabled={currentPage === lastPage}>
-          Next
+          Suivant
         </button>
       </div>
     </div>
@@ -269,21 +269,21 @@ function MyComponent() {
   const handleSave = async () => {
     try {
       await saveData();
-      success('Data saved!', 'Success');
+      success('Données enregistrées !', 'Succès');
     } catch (e) {
-      error('An error occurred', 'Error');
+      error('Une erreur est survenue', 'Erreur');
     }
   };
 
-  // Advanced notification
+  // Notification avancée
   const handleAdvanced = () => {
     notify({
       type: 'info',
-      title: 'New update',
-      message: 'A new version is available',
+      title: 'Nouvelle mise à jour',
+      message: 'Une nouvelle version est disponible',
       duration: 0, // Permanent
       action: {
-        label: 'Update',
+        label: 'Mettre à jour',
         onClick: () => updateApp(),
       },
     });
@@ -370,9 +370,7 @@ npm run test:watch    # Watch mode
 npm run test:coverage # With coverage
 ```
 
-## 📚 Documentation
 
-See [README.md](./README.md)
 
 ## 📄 License
 
